@@ -1,0 +1,4 @@
+// CHECKPOINT 1: PTHREADS IMPLEMENTATION GOES HERE
+int main() {
+    return 0;
+}
