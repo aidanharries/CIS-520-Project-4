@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h> // Include for intptr_t
 
 #define NUM_THREADS 4
 
@@ -9,10 +10,10 @@
 #define STRING_SIZE 16
 #define ALPHABET_SIZE 26
 
-pthread_mutex_t mutexsum;			// mutex for char_counts
+pthread_mutex_t mutexsum; // mutex for char_counts
 
 char char_array[ARRAY_SIZE][STRING_SIZE];
-int char_counts[ALPHABET_SIZE];			// count of individual characters
+int char_counts[ALPHABET_SIZE]; // count of individual characters
 
 char getRandomChar()
 {
@@ -20,7 +21,7 @@ char getRandomChar()
 	char randChar = ' ';
 
 	randNum = ALPHABET_SIZE * (rand() / (RAND_MAX + 1.0)); 	// pick number 0 < # < 25
-	randNum = randNum + 97;				// scale to 'a'
+	randNum = randNum + 97;	// scale to 'a'
 	randChar = (char) randNum;
 
 	// printf("%c", randChar);
@@ -50,10 +51,10 @@ void *count_array(void *myID)
   int i, j, charLoc;
   int local_char_count[ALPHABET_SIZE];
 
-  int startPos = ((int) myID) * (ARRAY_SIZE / NUM_THREADS);
+  int startPos = ((intptr_t) myID) * (ARRAY_SIZE / NUM_THREADS);
   int endPos = startPos + (ARRAY_SIZE / NUM_THREADS);
 
-  printf("myID = %d startPos = %d endPos = %d \n", (int) myID, startPos, endPos);
+  printf("myID = %ld startPos = %d endPos = %d \n", (intptr_t)myID, startPos, endPos);
 
 					// init local count array
   for ( i = 0; i < ALPHABET_SIZE; i++ ) {
@@ -79,7 +80,7 @@ void *count_array(void *myID)
 
 void print_results()
 {
-  int i,j, total = 0;
+  int i, total = 0;
 
   					// then print out the totals
   for ( i = 0; i < ALPHABET_SIZE; i++ ) {
@@ -89,7 +90,7 @@ void print_results()
   printf("\nTotal characters:  %d\n", total);
 }
 
-main() {
+int main() {
 	int i, rc;
 	pthread_t threads[NUM_THREADS];
 	pthread_attr_t attr;
@@ -103,7 +104,7 @@ main() {
 	init_arrays();
 
 	for (i = 0; i < NUM_THREADS; i++ ) {
-	      rc = pthread_create(&threads[i], &attr, count_array, (void *)i);
+	      rc = pthread_create(&threads[i], &attr, count_array, (void *)(intptr_t)i);
 	      if (rc) {
 	        printf("ERROR; return code from pthread_create() is %d\n", rc);
 		exit(-1);
