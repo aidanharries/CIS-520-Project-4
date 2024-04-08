@@ -11,4 +11,4 @@ echo "Running pthreads max char finder on $HOSTNAME"
 ./pthreads_program /homes/dan/625/wiki_dump.txt
 # ./pthreads_program ../test.txt # Text file for testing
 
-echo "Finished run on $SLURM_NTASKS cores on $HOSTNAME"
+echo "Finished run on $SLURM_NTASKS $HOSTNAME cores"
