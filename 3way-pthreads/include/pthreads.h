@@ -1,9 +1,6 @@
 #ifndef PTHREADS_H__
 #define PTHREADS_H__
 
-#include <pthread.h>
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

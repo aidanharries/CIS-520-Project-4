@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <pthread.h>
 #include <string.h>
 #include <sys/time.h>
 #include "pthreads.h"
 
-#define MAX_LINES 1000000
-#define MAX_LINE_LENGTH 1000
+#define MAX_LINES 100
+#define MAX_LINE_LENGTH 3000
 #define MAX_THREADS 40
 
 // Global variables
