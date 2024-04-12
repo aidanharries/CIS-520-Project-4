@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    // Start performance measurments
+    struct timespec* startTime = malloc(sizeof(struct timespec));
+    clock_gettime(CLOCK_REALTIME, startTime);
+
     // Allocate memory for lines and maxValues
     char **lines = (char **)malloc(MAX_LINES * sizeof(char *));
     int *maxValues = (int *)malloc(MAX_LINES * sizeof(int));
@@ -86,6 +90,21 @@ int main(int argc, char *argv[])
     free(lines); // Free lines array
     free(maxValues); // Free maxValues array
 
+    // End performance measurments
+    struct timespec* endTime = malloc(sizeof(struct timespec));
+    clock_gettime(CLOCK_REALTIME, endTime);
+
+    // Print performance results
+    if(endTime->tv_nsec - startTime->tv_nsec < 0){ // Prevent any overflow in the nanoseconds
+        endTime->tv_sec--;
+        endTime->tv_nsec += 1000000000; // take a second and move it into the nanoseconds for proper subtraction
+    }
+    printf("Performance: %lld seconds and %ld nano-seconds\n", 
+        endTime->tv_sec - startTime->tv_sec,
+        endTime->tv_nsec - startTime->tv_nsec);
+    // printf("Start time: %lld seconds and %ld nano-seconds\n", startTime->tv_sec, startTime->tv_nsec);
+    // printf("End time: %lld seconds and %ld nano-seconds\n", endTime->tv_sec, endTime->tv_nsec);
+    
     return 0;
 }
 
