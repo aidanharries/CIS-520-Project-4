@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH --mem=16G
 #SBATCH --time=24:00:00
-#SBATCH --job-name=1thread
+#SBATCH --job-name=4thread
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --nodelist=mole[001-040,053-079,081-120]
