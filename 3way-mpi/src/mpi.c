@@ -204,12 +204,34 @@ int main(int argc, char *argv[])
 
         // Calculate and print performance metrics
         long seconds = end_time.tv_sec - start_time.tv_sec;
-        long micros = (seconds * 1000000 + end_time.tv_usec) - start_time.tv_usec;
+        long micros = end_time.tv_usec - start_time.tv_usec;
 
+        // Normalize the microseconds
+        if (micros < 0) {
+            micros += 1000000;  // adjust by one second
+            seconds -= 1;
+        }
+
+        long total_micros = seconds * 1000000 + micros;
+
+        // Calculate user and system CPU time used
         long user_seconds = usage_end.ru_utime.tv_sec - usage_start.ru_utime.tv_sec;
         long user_microseconds = usage_end.ru_utime.tv_usec - usage_start.ru_utime.tv_usec;
+
+        // Normalize user CPU time
+        if (user_microseconds < 0) {
+            user_microseconds += 1000000;
+            user_seconds -= 1;
+        }
+
         long system_seconds = usage_end.ru_stime.tv_sec - usage_start.ru_stime.tv_sec;
         long system_microseconds = usage_end.ru_stime.tv_usec - usage_start.ru_stime.tv_usec;
+
+        // Normalize system CPU time
+        if (system_microseconds < 0) {
+            system_microseconds += 1000000;
+            system_seconds -= 1;
+        }
 
         process_memory_t myMem;
         get_process_memory(&myMem);
@@ -219,15 +241,14 @@ int main(int argc, char *argv[])
             printf("%d: %d\n", i, max_values[i]);
         }
 
-        // Output performance metrics and max values
+        // Output performance metrics
         printf("\n");
-        printf("Total runtime: %ld microseconds\n", micros);
+        printf("Total runtime: %ld microseconds\n", total_micros);
         printf("User CPU time used: %ld seconds, %ld microseconds\n", user_seconds, user_microseconds);
         printf("System CPU time used: %ld seconds, %ld microseconds\n", system_seconds, system_microseconds);
         printf("Virtual memory used: %u KB\n", myMem.virtual_memory);
         printf("Physical memory used: %u KB\n", myMem.physical_memory);
         printf("\n");
-
     }
 
     // Free allocated memory
