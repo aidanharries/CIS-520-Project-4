@@ -100001,11 +100001,11 @@ Running pthreads max char finder on mole088
 99998: 125
 99999: 125
 
-Total runtime: 303987 microseconds
-User CPU time used: 0 seconds, 480340 microseconds
-System CPU time used: 0 seconds, 4674 microseconds
-Virtual memory used: 188500 KB
-Physical memory used: 170896 KB
+Total runtime: 366773 microseconds
+User CPU time used: 0 seconds, 551077 microseconds
+System CPU time used: 0 seconds, 4483 microseconds
+Virtual memory used: 188540 KB
+Physical memory used: 170868 KB
 Total threads used: 2
 
 Finished run on 2 mole088 cores
