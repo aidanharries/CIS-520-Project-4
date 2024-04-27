@@ -101,10 +101,10 @@ Running MPI max char finder on mole010
 98: 125
 99: 125
 
-Total runtime: 142 microseconds
-User CPU time used: 0 seconds, 26 microseconds
-System CPU time used: 0 seconds, 115 microseconds
-Virtual memory used: 372212 KB
-Physical memory used: 21556 KB
+Total runtime: 174 microseconds
+User CPU time used: 0 seconds, 36 microseconds
+System CPU time used: 0 seconds, 146 microseconds
+Virtual memory used: 523500 KB
+Physical memory used: 99704 KB
 
 Finished run on 8 mole010 cores
