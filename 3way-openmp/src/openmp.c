@@ -168,6 +168,7 @@ int main(int argc, char *argv[]) {
     printf("System CPU time used: %ld seconds, %ld microseconds\n", system_seconds, system_microseconds);
     printf("Virtual memory used: %u KB\n", myMem.virtual_memory);
     printf("Physical memory used: %u KB\n", myMem.physical_memory);
+    printf("Total threads used: %d\n", threads_num); // Total number of threads used
     printf("\n");
 
     // Free allocated memory

@@ -1,16 +1,29 @@
+# Compiles the OpenMP max char finder program
+
+# Directories
+SRCDIR = ../src
+OBJDIR = ./obj
+
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Wshadow -Werror -fopenmp
-LDFLAGS = -fopenmp
 
-TARGET = openmp_program  # Name of the output executable
+# Create the obj directory if it doesn't exist
+$(shell mkdir -p $(OBJDIR))
 
-SOURCES = openmp.c  # Source files
+# Objects
+_OBJ = openmp.o
+OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
-# Default build target
-all: $(TARGET)
+# Rule to compile source files into object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TARGET): $(SOURCES)
-	$(CC) $(CFLAGS) $(SOURCES) -o $(TARGET) $(LDFLAGS)
+# Target to compile the final executable
+openmp_program: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
 
+# Clean target
+.PHONY: clean
 clean:
-	rm -f $(TARGET) *.o
+	rm -rf $(OBJDIR) *~ core openmp_program
